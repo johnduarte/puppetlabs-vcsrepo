@@ -384,6 +384,32 @@ describe 'clones a remote repo' do
     end
   end
 
+  context 'track multiple remotes' do
+    it 'applies the manifest' do
+      pp = <<-EOS
+      vcsrepo { "#{tmpdir}/testrepo_multi_remote":
+        ensure => present,
+        provider => git,
+        source => "file://#{tmpdir}/testrepo.git",
+        remote => [ 'server1', 'server2' ],
+      }
+      EOS
+
+      # Run it twice and test for idempotency
+      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, :catch_changes => true)
+    end
+
+    it 'should have multiple remote names' do
+      shell("git --git-dir=#{tmpdir}/testrepo_remote/.git remote") do |r|
+        expect(r.stdout).to match(/server1/)
+        expect(r.stdout).to match(/server2/)
+        expect(r.stderr).to be_empty
+      end
+    end
+
+  end
+
   context 'as a user with ssh' do
     before(:all) do
       # create user
