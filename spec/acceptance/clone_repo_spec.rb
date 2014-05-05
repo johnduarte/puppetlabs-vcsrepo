@@ -14,6 +14,7 @@ describe 'clones a remote repo' do
     shell("rm -rf #{tmpdir}/testrepo.git")
   end
 
+  # C3427
   context 'get the current master HEAD' do
     it 'clones a repo' do
       pp = <<-EOS
@@ -38,6 +39,7 @@ describe 'clones a remote repo' do
     end
   end
 
+  # C3452
   context 'using a commit SHA' do
     let (:sha) do
       shell("git --git-dir=#{tmpdir}/testrepo.git rev-list HEAD | tail -1").stdout.chomp
@@ -71,6 +73,7 @@ describe 'clones a remote repo' do
     end
   end
 
+  # C3445
   context 'using a tag' do
     it 'clones a repo' do
       pp = <<-EOS
@@ -96,6 +99,7 @@ describe 'clones a remote repo' do
     end
   end
 
+  # C3438
   context 'using a branch name' do
     it 'clones a repo' do
       pp = <<-EOS
@@ -121,6 +125,7 @@ describe 'clones a remote repo' do
     end
   end
 
+  # C3464
   context 'ensure latest with branch specified' do
     it 'clones a repo' do
       pp = <<-EOS
@@ -166,6 +171,7 @@ describe 'clones a remote repo' do
     end
   end
 
+  # C3476
   context 'with shallow clone' do
     it 'does a shallow clone' do
       pp = <<-EOS
@@ -187,6 +193,7 @@ describe 'clones a remote repo' do
     end
   end
 
+  # C3481
   context 'path is not empty and not a repository' do
     before(:all) do
       shell("mkdir #{tmpdir}/not_a_repo", :acceptable_exit_codes => [0,1])
@@ -205,6 +212,7 @@ describe 'clones a remote repo' do
     end
   end
 
+  # C3459
   context 'with an owner' do
     pp = <<-EOS
     user { 'vagrant':
@@ -234,6 +242,7 @@ describe 'clones a remote repo' do
     end
   end
 
+  # C3487
   context 'with a group' do
     pp = <<-EOS
     group { 'vagrant':
@@ -264,6 +273,7 @@ describe 'clones a remote repo' do
     end
   end
 
+  # C3507
   context 'with excludes' do
     it 'clones a repo' do
       pp = <<-EOS
@@ -286,6 +296,7 @@ describe 'clones a remote repo' do
     end
   end
 
+  # C3510
   context 'with force' do
     before(:all) do
       shell("mkdir -p #{tmpdir}/testrepo_force/folder")
@@ -320,6 +331,7 @@ describe 'clones a remote repo' do
     end
   end
 
+  # C3459
   context 'as a user' do
     before(:all) do
       shell("chmod 707 #{tmpdir}")
@@ -410,6 +422,7 @@ describe 'clones a remote repo' do
 
   end
 
+  # C3428
   context 'as a user with ssh' do
     before(:all) do
       # create user
@@ -457,6 +470,7 @@ describe 'clones a remote repo' do
     end
   end
 
+  # C3466
   context 'using an identity file' do
     before(:all) do
       # create user
