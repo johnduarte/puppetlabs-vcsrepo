@@ -50,8 +50,8 @@ hosts.each do |host|
       fail_test('shallow not found') unless res.stdout.include? "shallow"
     end
 
-    on(host, "wc -l #{tmpdir}/#{repo_name}/.git/shallow") do |res|
-      fail_test('shallow not found') unless res.stdout.include? "2 #{tmpdir}/#{repo_name}/.git/shallow"
+    on(host, "cd #{tmpdir}/#{repo_name}; git log --format=oneline | wc -l") do |res|
+      assert_equal(1,res.stdout.chomp.to_i,'more than 1 commit shown in git log')
     end
   end
 
